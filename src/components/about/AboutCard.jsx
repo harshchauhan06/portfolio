@@ -21,12 +21,9 @@ const VH = 560;
 /* Different shape from hero card */
 const EDGE_PATH = paperEdgePath(VW, VH, 52, 10, 9);
 
-const PREVIEW = `Hi, I'm Harsh Chauhan, a Full Stack Developer.
+const PREVIEW = `I'm a full-stack developer who enjoys turning ideas into products that are fast, reliable, and thoughtfully designed.
 
-I build scalable, high-performance web applications, reliable backend
-systems, and thoughtful AI-powered solutions. My passion lies in
-crafting clear and impactful digital experiences.`;
-
+From scalable backend systems to polished frontend experiences, I focus on building software that's clean, maintainable, and genuinely useful.`;
 const EXPANDED = `Hi, I'm Harsh Chauhan, a Full Stack Developer.
 
 I build scalable, high-performance web applications, reliable backend
@@ -114,26 +111,26 @@ export default function AboutCard() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <section className="flex justify-center px-6 pb-16 mt-8">
-      <div className="relative w-full max-w-[480px]">
+    <section className="flex justify-center px-6 mt-20 mb-20">
+      <div className="relative w-full max-w-[640px]">
 
         <PaperBackground />
 
         {/* Content — normal flow, no clip, no aspect-ratio */}
-        <div className="relative px-10 pt-9 pb-8 md:px-12 md:pt-10 md:pb-9">
+        <div className="relative px-14 pt-14 pb-12 md:px-16 md:pt-16 md:pb-14">
 
           {/* Heading */}
           <h2 className="
             font-serif font-bold
             text-[#3D2B1A]
-            text-[22px] leading-[1.2]
-            mb-3
+            text-[42px] leading-none
+            mb-6
           ">
             About Me
           </h2>
 
           {/* Preview text — always visible */}
-          <p className="text-[14px] leading-[1.8] text-[#5A4030] whitespace-pre-line">
+          <p className="text-[18px] leading-[1.8] text-[#5A4030] whitespace-pre-line">
             {PREVIEW}
           </p>
 
@@ -147,7 +144,7 @@ export default function AboutCard() {
           >
             <div className="overflow-hidden">
               <p className="
-                text-[14px] leading-[1.8] text-[#5A4030]
+                text-[18px] leading-[1.8] text-[#5A4030]
                 whitespace-pre-line
                 pt-4
               ">
@@ -161,7 +158,7 @@ export default function AboutCard() {
           <button
             onClick={() => setExpanded(e => !e)}
             className="
-              mt-4
+              mt-8
               inline-flex items-center gap-1
               text-[13px] font-medium
               text-[#A36A1F]
