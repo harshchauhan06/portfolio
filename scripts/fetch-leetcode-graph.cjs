@@ -95,20 +95,25 @@ function normalizeCalendar(obj) {
       });
 
       try {
+        // allow passing LEETCODE_SESSION cookie via env or second arg
+        const cookieHeader = process.env.LEETCODE_SESSION || process.argv[2] && process.argv[3] ? process.argv[3] : null;
+        const headers = { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(gqlQuery) };
+        if (cookieHeader) headers['Cookie'] = `LEETCODE_SESSION=${cookieHeader}`;
+
         const graphql = await new Promise((resolve, reject) => {
-          const req = https.request(
-            'https://leetcode.com/graphql',
-            { method: 'POST', headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(gqlQuery) } },
-            (res) => {
-              let d = '';
-              res.on('data', (c) => (d += c));
-              res.on('end', () => resolve(d));
-            }
-          );
-          req.on('error', reject);
-          req.write(gqlQuery);
-          req.end();
-        });
+            const req = https.request(
+              'https://leetcode.com/graphql',
+              { method: 'POST', headers },
+              (res) => {
+                let d = '';
+                res.on('data', (c) => (d += c));
+                res.on('end', () => resolve(d));
+              }
+            );
+            req.on('error', reject);
+            req.write(gqlQuery);
+            req.end();
+          });
         const g = JSON.parse(graphql);
         const mu = g && g.data && g.data.matchedUser;
         if (mu) {

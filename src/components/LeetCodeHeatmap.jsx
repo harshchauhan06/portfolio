@@ -95,44 +95,49 @@ export default function LeetCodeHeatmap({ weeks = 53, cellSize = 12, gap = 4 }) 
   const hardSolved = data.hardSolved || fallbackData.hardSolved || 0;
 
   return (
-    <div style={{ marginTop: 24 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <h3 style={{ margin: 0 }}>LeetCode activity</h3>
-        <div style={{ color: '#6b7280', fontSize: 12 }}>
-          {totalSolved} solved • Easy {easySolved} • Medium {mediumSolved} • Hard {hardSolved}
+    <div className="py-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-6">
+          <p className="uppercase tracking-[0.35em] text-[12px] text-[#B67A2D] mb-3 font-semibold">Consistency</p>
+          <h2 className="text-3xl md:text-4xl font-serif text-[#3D2B1A]">Days I Code</h2>
+          <p className="mt-3 max-w-2xl mx-auto text-[#6B4A32] leading-7">Every solved problem is another step toward becoming a better engineer. This heatmap shows my coding consistency over the past year.</p>
         </div>
-      </div>
 
-      <div style={{ overflowX: 'auto', paddingTop: 12 }}>
-        <div style={containerStyle}>
-          {cells.map((c) => (
-            <div
-              key={c.date}
-              title={`${c.date}: ${c.count} submission${c.count === 1 ? '' : 's'}`}
-              aria-label={`${c.date}: ${c.count} submissions`}
-              style={{
-                width: cellSize,
-                height: cellSize,
-                background: colorFor(c.count),
-                borderRadius: 3,
-                boxSizing: 'border-box',
-                border: '1px solid rgba(0,0,0,0.04)'
-              }}
-            />
-          ))}
-        </div>
-      </div>
+        <div className="bg-[#FFFDF8] rounded-[36px] border border-[#E8D6B7] shadow-lg p-6 md:p-10">
+          <div style={{ overflowX: 'auto', paddingTop: 12 }}>
+            <div style={containerStyle}>
+              {cells.map((c) => (
+                <div
+                  key={c.date}
+                  title={`${c.date}: ${c.count} submission${c.count === 1 ? '' : 's'}`}
+                  aria-label={`${c.date}: ${c.count} submissions`}
+                  style={{
+                    width: cellSize,
+                    height: cellSize,
+                    background: colorFor(c.count),
+                    borderRadius: 3,
+                    boxSizing: 'border-box',
+                    border: '1px solid rgba(0,0,0,0.04)'
+                  }}
+                />
+              ))}
+            </div>
+          </div>
 
-      <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center', fontSize: 12 }}>
-        <span style={{ color: '#6b7280' }}>Less</span>
-        <div style={{ display: 'flex', gap: 4 }}>
-          <div style={{ width: 12, height: 12, background: '#ebedf0', borderRadius: 3, border: '1px solid rgba(0,0,0,0.04)' }} />
-          <div style={{ width: 12, height: 12, background: '#9be9a8', borderRadius: 3 }} />
-          <div style={{ width: 12, height: 12, background: '#40c463', borderRadius: 3 }} />
-          <div style={{ width: 12, height: 12, background: '#30a14e', borderRadius: 3 }} />
-          <div style={{ width: 12, height: 12, background: '#216e39', borderRadius: 3 }} />
+          <div className="mt-4 flex items-center gap-3 text-sm text-[#6b7280]">
+            <span>Less</span>
+            <div className="flex gap-2">
+              <div style={{ width: 12, height: 12, background: '#ebedf0', borderRadius: 3, border: '1px solid rgba(0,0,0,0.04)' }} />
+              <div style={{ width: 12, height: 12, background: '#9be9a8', borderRadius: 3 }} />
+              <div style={{ width: 12, height: 12, background: '#40c463', borderRadius: 3 }} />
+              <div style={{ width: 12, height: 12, background: '#30a14e', borderRadius: 3 }} />
+              <div style={{ width: 12, height: 12, background: '#216e39', borderRadius: 3 }} />
+            </div>
+            <span>More</span>
+
+            <div className="ml-auto text-[#6b7280]">{totalSolved} solved • Easy {easySolved} • Medium {mediumSolved} • Hard {hardSolved}</div>
+          </div>
         </div>
-        <span style={{ color: '#6b7280' }}>More</span>
       </div>
     </div>
   );
