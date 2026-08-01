@@ -215,7 +215,7 @@ export default function AboutSection() {
      * max-w-[1100px] centres the pair within the page and matches the
      * navbar's max-width so the section feels intentionally aligned.
      */
-    <section className="
+    <section id="about" className="
       w-full max-w-[1180px] mx-auto
       px-5 sm:px-8
       mt-8 mb-6

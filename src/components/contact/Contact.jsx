@@ -67,7 +67,7 @@ function Sparkle({ className }) {
 
 export default function Contact() {
   return (
-    <section className="relative flex flex-col items-center text-center px-6 pt-14 pb-10">
+    <section id="contact" className="relative flex flex-col items-center text-center px-6 pt-14 pb-10">
 
       {/*
         Sparkle: moved higher (top-[18%]) and farther left from right edge

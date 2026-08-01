@@ -5,8 +5,8 @@ import PaperCard from "../background/PaperCard";
 export default function Hero() {
   return (
     <section
-      className="flex justify-center px-4 sm:px-6 pb-4"
-      style={{ marginTop: "120px" }}
+      id="home"
+      className="flex justify-center px-4 sm:px-6 pb-4 mt-[90px] sm:mt-[120px]"
     >
       <PaperCard>
         <div className="flex flex-col items-center text-center w-full">
