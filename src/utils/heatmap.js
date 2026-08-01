@@ -100,7 +100,7 @@ export function buildCalendar(calendarObject) {
 
         days.push({
             date: new Date(d),
-            count: Number(calendarObject ? .[ts] ? ? 0),
+            count: Number(calendarObject?.[ts] ?? 0),
         });
     }
 
@@ -170,7 +170,7 @@ export function calculateStreaks(calendarObject) {
     for (let d = new Date(start); d <= today; d = new Date(d.getTime() + DAY)) {
         const ts = Math.floor(d.getTime() / 1000);
 
-        values.push(Number(calendarObject ? .[ts] ? ? 0));
+        values.push(Number(calendarObject?.[ts] ?? 0));
     }
 
     let longest = 0;
