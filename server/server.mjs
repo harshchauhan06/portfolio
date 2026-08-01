@@ -11,11 +11,13 @@
  * calls fetch("/api/leetcode") cleanly.
  */
 
-import http  from "node:http";
+import fs from "node:fs/promises";
+import http from "node:http";
 import https from "node:https";
 
-const PORT     = 3001;
-const USERNAME = process.env.LC_USERNAME ?? "harshchauhan06";
+const PORT = 3001;
+const USERNAME = process.env.LC_USERNAME ?? process.env.VITE_LEETCODE_USERNAME ?? "harshchauhan06";
+const CACHE_FILE = new URL("../src/data/leetcode.json", import.meta.url);
 
 /* ─── LeetCode GraphQL query ─────────────────────────────────────────────── */
 const GRAPHQL_QUERY = `
@@ -34,6 +36,23 @@ const GRAPHQL_QUERY = `
   }
 `;
 
+async function loadCache() {
+  try {
+    const raw = await fs.readFile(CACHE_FILE, "utf-8");
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+async function saveCache(payload) {
+  try {
+    await fs.writeFile(CACHE_FILE, JSON.stringify(payload, null, 2));
+  } catch (err) {
+    console.warn("[server] Failed to write LeetCode cache:", err.message);
+  }
+}
+
 /**
  * Calls the LeetCode public GraphQL endpoint.
  * Returns cleaned JSON or throws on failure.
@@ -47,30 +66,32 @@ async function fetchLeetCodeData(username) {
 
     const options = {
       hostname: "leetcode.com",
-      path:     "/graphql",
-      method:   "POST",
-      headers:  {
-        "Content-Type":   "application/json",
+      path: "/graphql",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
         "Content-Length": Buffer.byteLength(body),
-        "Referer":        "https://leetcode.com",
-        "User-Agent":     "Mozilla/5.0 (compatible; portfolio-heatmap/1.0)",
+        "Accept": "application/json, text/plain, */*",
+        "Referer": "https://leetcode.com",
+        "User-Agent": "Mozilla/5.0 (compatible; portfolio-heatmap/1.0)",
       },
     };
 
     const req = https.request(options, (res) => {
       let raw = "";
-      res.on("data", (chunk) => { raw += chunk; });
+      res.on("data", (chunk) => {
+        raw += chunk;
+      });
       res.on("end", () => {
         try {
           const json = JSON.parse(raw);
           const user = json?.data?.matchedUser;
 
           if (!user) {
-            reject(new Error("LeetCode user not found or API changed"));
+            reject(new Error(json?.errors?.[0]?.message ?? "LeetCode user not found or API changed"));
             return;
           }
 
-          // Parse submissionCalendar (it's a JSON-encoded string inside the response).
           const calRaw = user.userCalendar?.submissionCalendar ?? "{}";
           let submissionCalendar;
           try {
@@ -79,13 +100,12 @@ async function fetchLeetCodeData(username) {
             submissionCalendar = {};
           }
 
-          // Parse solved counts by difficulty.
-          const stats     = user.submitStats?.acSubmissionNum ?? [];
-          const getCount  = (diff) => stats.find(s => s.difficulty === diff)?.count ?? 0;
-          const totalSolved  = getCount("All");
-          const easySolved   = getCount("Easy");
+          const stats = user.submitStats?.acSubmissionNum ?? [];
+          const getCount = (diff) => stats.find((s) => s.difficulty === diff)?.count ?? 0;
+          const totalSolved = getCount("All");
+          const easySolved = getCount("Easy");
           const mediumSolved = getCount("Medium");
-          const hardSolved   = getCount("Hard");
+          const hardSolved = getCount("Hard");
 
           resolve({ submissionCalendar, totalSolved, easySolved, mediumSolved, hardSolved });
         } catch (e) {
@@ -101,10 +121,8 @@ async function fetchLeetCodeData(username) {
 }
 
 /* ─── HTTP server ─────────────────────────────────────────────────────────── */
-
 const server = http.createServer(async (req, res) => {
-  // CORS — allow the Vite dev server (any localhost origin).
-  res.setHeader("Access-Control-Allow-Origin",  "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -115,7 +133,6 @@ const server = http.createServer(async (req, res) => {
   }
 
   const url = new URL(req.url, `http://localhost:${PORT}`);
-
   if (url.pathname !== "/api/leetcode") {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: "Not found" }));
@@ -123,13 +140,32 @@ const server = http.createServer(async (req, res) => {
   }
 
   const username = url.searchParams.get("username") ?? USERNAME;
+  const cache = await loadCache();
 
   try {
     const data = await fetchLeetCodeData(username);
+    if (!data.submissionCalendar || Object.keys(data.submissionCalendar).length === 0) {
+      throw new Error("LeetCode calendar data unavailable.");
+    }
+
+    const payload = {
+      ...data,
+      source: "live",
+      cachedAt: new Date().toISOString(),
+    };
+
+    await saveCache(payload);
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(data));
+    res.end(JSON.stringify(payload));
   } catch (err) {
     console.error("[server] LeetCode fetch failed:", err.message);
+    if (cache?.submissionCalendar && Object.keys(cache.submissionCalendar).length > 0) {
+      console.log("[server] Returning cached LeetCode data.");
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ...cache, source: "cache" }));
+      return;
+    }
+
     res.writeHead(502, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: err.message }));
   }
