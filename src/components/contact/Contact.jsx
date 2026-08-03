@@ -1,13 +1,16 @@
 /*
- * Contact.jsx — refined "Find Me" section.
- * Polished spacing, hierarchy and decorative elements only.
- * No layout or style changes.
+ * Contact.jsx — Editorial closing section. "Find Me."
+ *
+ * Closing-page feel: generous whitespace, editorial heading hierarchy,
+ * sparkle ornament, contact icons that gently fade in on scroll.
  */
+
+import { useEffect, useRef, useState } from "react";
 
 const LINKS = [
   {
     label: "GitHub",
-    href: "https://github.com/harshchauhan",
+    href: "https://github.com/harshchauhan06",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
         <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.112-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
@@ -16,7 +19,7 @@ const LINKS = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/harshchauhan",
+    href: "https://linkedin.com/in/harshchauhan06",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -48,7 +51,7 @@ const LINKS = [
   },
 ];
 
-/* Sparkle — slightly smaller, more subtle */
+/* ─── Sparkle ─────────────────────────────────────────────────────────────── */
 function Sparkle({ className }) {
   return (
     <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden="true">
@@ -66,40 +69,76 @@ function Sparkle({ className }) {
 }
 
 export default function Contact() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section id="contact" className="relative flex flex-col items-center text-center px-6 pt-14 pb-10">
+    <section
+      id="contact"
+      ref={ref}
+      className={`
+        relative flex flex-col items-center text-center
+        px-6
+        pt-16 pb-14
+        section-hidden
+        ${visible ? "section-visible" : ""}
+      `}
+    >
 
-      {/*
-        Sparkle: moved higher (top-[18%]) and farther left from right edge
-        (right-[14%]) so it doesn't overlap the decorative circles on the far right.
-        Slightly smaller: w-8 h-8 (was w-10 h-10).
-      */}
-      <Sparkle className="absolute right-[14%] top-[18%] w-8 h-8 opacity-65" />
+      {/* Sparkle ornament */}
+      <Sparkle className="w-10 h-10 mb-6 opacity-70" />
 
-      {/* FIND ME label — 10% larger, slightly more tracking */}
+      {/* Editorial label */}
       <p className="
         text-[10.5px] font-semibold uppercase
         tracking-[0.48em]
         text-[#A36A1F] opacity-80
-        mb-3
+        mb-4
+      ">
+        Let&rsquo;s Build Something Together
+      </p>
+
+      {/* Heading */}
+      <h2 className="
+        font-serif font-bold
+        text-[#3D2B1A]
+        text-[36px] sm:text-[42px]
+        leading-[1.05]
+        tracking-[-0.02em]
+        mb-5
       ">
         Find Me
-      </p>
+      </h2>
 
-      {/* Tagline — 2px larger, tighter gap to icons */}
+      {/* Tagline */}
       <p className="
-        text-[16px] font-normal
+        text-[15px] font-normal
         text-[#5A3E20]
-        mb-5
+        mb-8
         tracking-[0.01em]
-        max-w-[500px]
+        max-w-[420px]
+        leading-[1.75]
       ">
-        Interested in building something together? I'd love to hear from you.
+        Interested in building something together?<br className="hidden sm:block" />
+        I&rsquo;d love to hear from you.
       </p>
 
-      {/* Social icon buttons — 52px cream circles, centered */}
+      {/* Social icon buttons — fade-in staggered */}
       <div className="flex items-center justify-center gap-4">
-        {LINKS.map(({ label, href, icon }) => (
+        {LINKS.map(({ label, href, icon }, i) => (
           <a
             key={label}
             href={href}
@@ -119,15 +158,26 @@ export default function Contact() {
               hover:shadow-[0_4px_16px_rgba(61,43,26,.16)]
               hover:-translate-y-[1px]
               active:translate-y-0
+              anim-fade-in
             "
+            style={{
+              animationDelay: visible ? `${i * 80}ms` : "0ms",
+              opacity: visible ? undefined : 0,
+            }}
           >
             {icon}
           </a>
         ))}
       </div>
 
-      {/* Divider — slightly more visible */}
-      <div className="absolute bottom-0 left-[5%] right-[5%] h-px bg-[#A36A1F]/20" />
+      {/* Closing thin rule */}
+      <div className="mt-12 w-full max-w-[240px] mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="flex-1 h-px bg-[#A36A1F]/15" />
+          <div className="w-1 h-1 rounded-full bg-[#A36A1F]/30" />
+          <div className="flex-1 h-px bg-[#A36A1F]/15" />
+        </div>
+      </div>
 
     </section>
   );

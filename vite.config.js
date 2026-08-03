@@ -1,9 +1,18 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import fs from "fs";
-import path from "path";
 
+/**
+ * vite.config.js
+ *
+ * The /api proxy forwards to the optional Node server (server/server.mjs).
+ * If the server is not running, ContributionsSection falls back to the
+ * bundled src/data/leetcode.json cache automatically — no 502 is surfaced.
+ *
+ * NOTE: The old configureServer middleware was removed because it intercepted
+ * every /api/leetcode request before the proxy could fire, then returned the
+ * empty leetcode-graph.json file, causing a silent 502 upstream.
+ */
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
@@ -13,27 +22,13 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:3001",
         changeOrigin: true,
+        // Don't throw on proxy errors — the frontend has its own fallback.
+        configure: (proxy) => {
+          proxy.on("error", (err) => {
+            console.warn("[vite proxy] LeetCode server unavailable:", err.message);
+          });
+        },
       },
     },
-  },
-  configureServer(server) {
-    server.middlewares.use((req, res, next) => {
-      if (req.url && req.url.startsWith("/api/leetcode")) {
-        const file = path.resolve(process.cwd(), "src", "data", "leetcode-graph.json");
-        if (fs.existsSync(file)) {
-          const body = fs.readFileSync(file, "utf8");
-          res.setHeader("Content-Type", "application/json");
-          res.statusCode = 200;
-          res.end(body);
-          return;
-        }
-
-        res.statusCode = 404;
-        res.end(JSON.stringify({ error: "LeetCode data not found. Run npm run fetch-graph" }));
-        return;
-      }
-
-      next();
-    });
   },
 });

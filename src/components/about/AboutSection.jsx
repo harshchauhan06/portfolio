@@ -1,10 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { paperEdgePath } from "../../utils/paperEdge";
 
-/* ─── Shared paper background factory ─────────────────────────────────────
-   Each card gets its own unique edge path so the two cards look hand-torn
-   independently. SVG gradient IDs are namespaced to avoid DOM conflicts.   */
-
+/* ─── Paper background factory ────────────────────────────────────────────── */
 function makePaperBg(edgePath, id) {
   return function PaperBg() {
     return (
@@ -57,15 +54,30 @@ function makePaperBg(edgePath, id) {
     );
   };
 }
- 
-/* ─── Edge paths — unique per card ──────────────────────────────────────── */
+
+/* ─── Paper-pin ornament ──────────────────────────────────────────────────── */
+function PaperPin({ className }) {
+  return (
+    <svg viewBox="0 0 24 48" className={className} fill="none" aria-hidden="true">
+      {/* Pin head */}
+      <circle cx="12" cy="10" r="7" fill="#A36A1F" opacity="0.55" />
+      <circle cx="12" cy="10" r="4" fill="#C89A5A" opacity="0.6" />
+      <circle cx="10" cy="8"  r="1.5" fill="#FDF8EE" opacity="0.5" />
+      {/* Pin shaft */}
+      <line x1="12" y1="17" x2="12" y2="42" stroke="#8A5A22" strokeWidth="1.5" opacity="0.4" strokeLinecap="round" />
+      {/* Tip */}
+      <path d="M10 40 L12 44 L14 40" fill="#7A4A1A" opacity="0.35" />
+    </svg>
+  );
+}
+
+/* ─── Edge paths ──────────────────────────────────────────────────────────── */
 const ABOUT_PATH  = paperEdgePath(1000, 560, 52, 10, 9);
 const SKILLS_PATH = paperEdgePath(1000, 560, 48, 11, 7);
-
 const AboutPaper  = makePaperBg(ABOUT_PATH,  "about");
 const SkillsPaper = makePaperBg(SKILLS_PATH, "skills");
 
-/* ─── Content data ───────────────────────────────────────────────────────── */
+/* ─── Content ─────────────────────────────────────────────────────────────── */
 const PREVIEW = `I'm a full-stack developer who enjoys turning ideas into products that are fast, reliable, and thoughtfully designed.`;
 
 const EXTRA = `From scalable backend systems to polished frontend experiences, I focus on building software that's clean, maintainable, and genuinely useful.
@@ -77,9 +89,9 @@ I care deeply about code quality, developer experience, and shipping things that
 I'm currently open to full-time opportunities and interesting freelance projects. If you think we'd work well together, I'd love to chat.`;
 
 const LEFT_SKILLS = [
-  { category: "Languages",       items: ["C", "C++", "Python", "JavaScript"] },
-  { category: "Frontend",        items: ["React", "HTML", "CSS", "Tailwind CSS"] },
-  { category: "Computer Science",items: ["Data Structures", "Algorithms"] },
+  { category: "Languages",        items: ["C", "C++", "Python", "JavaScript"] },
+  { category: "Frontend",         items: ["React", "HTML", "CSS", "Tailwind CSS"] },
+  { category: "Computer Science", items: ["Data Structures", "Algorithms"] },
 ];
 
 const RIGHT_SKILLS = [
@@ -106,24 +118,26 @@ function SkillGroup({ category, items, isLast }) {
   );
 }
 
-/* ─── About card ─────────────────────────────────────────────────────────── */
+/* ─── About card ──────────────────────────────────────────────────────────── */
 function AboutCard({ expanded, onToggle }) {
   return (
     <div className="relative w-full">
       <AboutPaper />
+      {/* Paper-pin decoration */}
+      <div className="absolute -top-5 left-[38%] z-10">
+        <PaperPin className="w-5 h-10 opacity-70" />
+      </div>
       <div className="relative px-9 pt-9 pb-8 sm:px-11 sm:pt-10 sm:pb-9">
 
         <h2 className="font-serif font-bold text-[#3D2B1A] text-[28px] sm:text-[32px] leading-none mb-6">
           About Me
         </h2>
 
-        {/* Narrower paragraph width for better readability */}
         <div className="max-w-[88%]">
           <p className="text-[14.5px] sm:text-[15px] leading-[1.9] text-[#5A4030]">
             {PREVIEW}
           </p>
 
-          {/* Expandable extra copy */}
           <div
             className="grid transition-all duration-500 ease-in-out"
             style={{ gridTemplateRows: expanded ? "1fr" : "0fr" }}
@@ -155,23 +169,18 @@ function AboutCard({ expanded, onToggle }) {
   );
 }
 
-/* ─── Working With card ──────────────────────────────────────────────────── */
+/* ─── Working With card ───────────────────────────────────────────────────── */
 function WorkingWithCard() {
   return (
     <div className="relative w-full">
       <SkillsPaper />
-
       <div className="relative px-9 pt-9 pb-8 sm:px-10 sm:pt-10 sm:pb-9">
 
-        {/* Label — matches About heading baseline */}
         <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#A36A1F] opacity-75 mb-6">
           Working With
         </p>
 
-        {/* Two-column skill grid */}
         <div className="grid grid-cols-2 gap-x-8">
-
-          {/* LEFT COLUMN */}
           <div className="space-y-[14px]">
             {LEFT_SKILLS.map((group, i) => (
               <SkillGroup
@@ -182,8 +191,6 @@ function WorkingWithCard() {
               />
             ))}
           </div>
-
-          {/* RIGHT COLUMN */}
           <div className="space-y-[14px]">
             {RIGHT_SKILLS.map((group, i) => (
               <SkillGroup
@@ -194,7 +201,6 @@ function WorkingWithCard() {
               />
             ))}
           </div>
-
         </div>
 
       </div>
@@ -202,27 +208,40 @@ function WorkingWithCard() {
   );
 }
 
-/* ─── Section wrapper ────────────────────────────────────────────────────── */
+/* ─── Section wrapper ─────────────────────────────────────────────────────── */
 export default function AboutSection() {
   const [expanded, setExpanded] = useState(false);
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
+      { threshold: 0.08 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    /*
-     * Responsive layout:
-     *   mobile  (<md): single column, cards stacked
-     *   desktop (≥md): two columns side by side, equal height
-     *
-     * max-w-[1100px] centres the pair within the page and matches the
-     * navbar's max-width so the section feels intentionally aligned.
-     */
-    <section id="about" className="
-      w-full max-w-[1180px] mx-auto
-      px-5 sm:px-8
-      mt-8 mb-6
-      grid grid-cols-1 md:grid-cols-[55fr_45fr]
-      gap-9 md:gap-10
-      items-start
-    ">
+    <section
+      id="about"
+      ref={ref}
+      className={`
+        w-full max-w-[1180px] mx-auto
+        px-5 sm:px-8
+        mt-10 mb-6
+        grid grid-cols-1 md:grid-cols-[55fr_45fr]
+        gap-9 md:gap-10
+        items-start
+        section-hidden
+        ${visible ? "section-visible" : ""}
+      `}
+    >
       <AboutCard expanded={expanded} onToggle={() => setExpanded(e => !e)} />
       <WorkingWithCard />
     </section>

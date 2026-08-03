@@ -5,5 +5,6 @@
   "easySolved": 0,
   "mediumSolved": 0,
   "hardSolved": 0,
-  "fetchedAt": "2026-07-27T16:50:46.884Z"
+  "fetchedAt": "2026-07-27T16:50:46.884Z",
+  "_note": "This file is no longer served by vite.config.js. The vite.config.js configureServer middleware was removed in favour of the 3-tier HeatmapService (live API → src/data/leetcode.json → sample). This file is kept for reference only."
 }
