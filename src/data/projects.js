@@ -1,20 +1,32 @@
 export const featuredProjects = [
   {
+    id: "expense-tracker",
     title: "Expense Tracker",
-    tagline: "Financial clarity with every swipe",
+    tagline: "React.js • Node.js • Express.js • PostgreSQL • JWT",
     description:
-      "A polished budgeting workspace that turns everyday spending into a calm, actionable story. Built for clean entry, quick insights, and better monthly habits.",
+      "A full-stack expense tracking workspace enabling users to securely manage personal expenses with JWT authentication, RESTful APIs, and interactive analytics charts.",
+    image: "/projects/expense-tracker.png",
+    demoUrl: "https://expense-tracker-pi-bay.vercel.app/dashboard",
+    repoUrl: "https://github.com/harshchauhan06/expense-tracker",
   },
   {
-    title: "Healix Healthcare App",
-    tagline: "Human-first care in a modern interface",
+    id: "healix",
+    title: "Healix (Healthcare Support Portal)",
+    tagline: "React.js • Vite • React Router DOM • Vercel",
     description:
-      "A patient-centered health experience designed to simplify appointments, records, and follow-up tasks with an editorial calm and clear visual hierarchy.",
+      "A responsive healthcare support platform enabling patients to submit support requests, volunteers to register for healthcare initiatives, and automated FAQ assistance.",
+    image: "/projects/healix.png",
+    demoUrl: "https://healthcare-support-app-five.vercel.app/",
+    repoUrl: "https://github.com/harshchauhan06/healthcare-support-app",
   },
   {
+    id: "ai-resume-reviewer",
     title: "AI Resume Reviewer",
-    tagline: "Smart feedback for sharper applications",
+    tagline: "Python • Flask • Groq API • Llama 3.1 • REST API",
     description:
-      "A thoughtful reviewer that turns career story, formatting, and keywords into quick editorial guidance, helping resumes feel more confident and refined.",
+      "An AI-powered application that analyzes resumes against target job roles and provides intelligent improvement feedback using Groq API (Llama 3.1) and Flask backend.",
+    image: "/projects/ai-resume-reviewer.png",
+    demoUrl: null, // Demo button omitted as requested
+    repoUrl: "https://github.com/harshchauhan06/Resume_Reviewer_project",
   },
 ];

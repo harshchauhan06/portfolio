@@ -1,10 +1,21 @@
 export default function ScrollIndicator() {
-  return (
-    <div className="flex flex-col items-center gap-[8px]">
+  const handleScroll = () => {
+    const el = document.getElementById("about");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
+  return (
+    <button
+      type="button"
+      onClick={handleScroll}
+      className="flex flex-col items-center gap-[8px] cursor-pointer group focus-visible:outline-none"
+      aria-label="Scroll to About section"
+    >
       {/* Animated descending light segment */}
       <div
-        className="relative h-9 w-px overflow-hidden rounded-full"
+        className="relative h-9 w-px overflow-hidden rounded-full transition-transform duration-200 group-hover:scale-y-110"
         style={{ background: "rgba(163,106,31,0.13)" }}
       >
         <div
@@ -20,13 +31,16 @@ export default function ScrollIndicator() {
         />
       </div>
 
-      <span style={{
-        fontSize: "9px",
-        fontWeight: 600,
-        textTransform: "uppercase",
-        letterSpacing: "0.32em",
-        color: "rgba(163,106,31,0.50)",
-      }}>
+      <span
+        style={{
+          fontSize: "9px",
+          fontWeight: 600,
+          textTransform: "uppercase",
+          letterSpacing: "0.32em",
+          color: "rgba(163,106,31,0.50)",
+        }}
+        className="group-hover:text-[#A36A1F] transition-colors"
+      >
         Scroll
       </span>
 
@@ -38,6 +52,6 @@ export default function ScrollIndicator() {
           100% { transform: translateY(210%); opacity: 0; }
         }
       `}</style>
-    </div>
+    </button>
   );
 }
