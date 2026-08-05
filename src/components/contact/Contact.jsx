@@ -9,19 +9,15 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { SOCIAL_LINKS } from "../../config/socialLinks";
 
-/* ─── Sparkle ─────────────────────────────────────────────────────────────── */
+/* ─── Sparkle Ornament (Opacity < 15%) ──────────────────────────────────── */
 function Sparkle({ className }) {
   return (
     <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden="true">
       <path d="M20 2 C20 2 21.5 14 20 20 C18.5 26 20 38 20 38"
-        stroke="#A36A1F" strokeWidth="1.2" strokeLinecap="round" opacity="0.4" />
+        stroke="#A36A1F" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
       <path d="M2 20 C2 20 14 18.5 20 20 C26 21.5 38 20 38 20"
-        stroke="#A36A1F" strokeWidth="1.2" strokeLinecap="round" opacity="0.4" />
-      <path d="M7 7 C7 7 15 15 20 20 C25 25 33 33 33 33"
-        stroke="#A36A1F" strokeWidth="0.7" strokeLinecap="round" opacity="0.2" />
-      <path d="M33 7 C33 7 25 15 20 20 C15 25 7 33 7 33"
-        stroke="#A36A1F" strokeWidth="0.7" strokeLinecap="round" opacity="0.2" />
-      <circle cx="20" cy="20" r="1.8" fill="#A36A1F" opacity="0.32" />
+        stroke="#A36A1F" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+      <circle cx="20" cy="20" r="1.8" fill="#A36A1F" opacity="0.3" />
     </svg>
   );
 }
@@ -135,22 +131,25 @@ export default function Contact() {
       className={`
         relative flex flex-col items-center text-center
         px-6
-        pt-8 pb-10 sm:pt-10 sm:pb-12
+        pt-8 pb-12 sm:pt-10 sm:pb-14
         section-hidden
         ${visible ? "section-visible" : ""}
       `}
     >
-      {/* Sparkle ornament */}
-      <Sparkle className="w-8 h-8 mb-4 opacity-70" />
+      {/* Background Lighting Variation for Chapter 04 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_60%,_rgba(255,248,236,0.5),_transparent_70%)] pointer-events-none" />
 
-      {/* Editorial label */}
+      {/* Sparkle ornament */}
+      <Sparkle className="w-8 h-8 mb-3 opacity-70" />
+
+      {/* Chapter Label */}
       <p className="
         text-[10.5px] font-semibold uppercase
         tracking-[0.48em]
-        text-[#A36A1F] opacity-80
+        text-[#A36A1F] opacity-85
         mb-3
       ">
-        LET&rsquo;S BUILD SOMETHING TOGETHER
+        CHAPTER 04 • CONTACT
       </p>
 
       {/* Heading */}
@@ -178,7 +177,7 @@ export default function Contact() {
         I&rsquo;d love to hear from you.
       </p>
 
-      {/* Social icon buttons — compact & centered */}
+      {/* Social icon buttons */}
       <div className="flex items-center justify-center gap-4 sm:gap-5 flex-wrap sm:flex-nowrap">
         {contactButtons.map(({ key, label, ariaLabel, href, isRoute, target, rel, download, icon }, i) => {
           const isValid = Boolean(href && typeof href === "string" && href.trim().length > 0);

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { featuredProjects } from "../../data/projects";
 
-/* ─── Bookmark ornament ──────────────────────────────────────────────────── */
-function Bookmark({ className }) {
+/* ─── Unique Section Decoration: Editorial Stamp (opacity < 15%) ─────────── */
+function EditorialStamp({ className }) {
   return (
-    <svg viewBox="0 0 20 32" className={className} fill="none" aria-hidden="true">
-      <rect x="2" y="1" width="16" height="28" rx="2" fill="#A36A1F" opacity="0.25" stroke="#A36A1F" strokeWidth="1" />
-      <path d="M2 22 L10 28 L18 22" fill="#A36A1F" opacity="0.55" />
-      <line x1="6" y1="7" x2="14" y2="7" stroke="#FDF8EE" strokeWidth="1.2" opacity="0.5" />
-      <line x1="6" y1="11" x2="14" y2="11" stroke="#FDF8EE" strokeWidth="1" opacity="0.35" />
-      <line x1="6" y1="15" x2="11" y2="15" stroke="#FDF8EE" strokeWidth="1" opacity="0.3" />
+    <svg viewBox="0 0 40 40" className={className} fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="18" stroke="#A36A1F" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.14" />
+      <circle cx="20" cy="20" r="14" stroke="#A36A1F" strokeWidth="0.8" opacity="0.12" />
+      <text x="20" y="24" textAnchor="middle" fill="#A36A1F" fontSize="9" fontWeight="bold" opacity="0.13" fontFamily="serif">
+        EST
+      </text>
     </svg>
   );
 }
@@ -153,20 +153,22 @@ export default function ProjectsSection() {
       className={`
         relative overflow-hidden
         px-5 sm:px-8 lg:px-10
-        my-8 sm:my-12
+        my-12 sm:my-16
         section-hidden
         ${visible ? "section-visible" : ""}
       `}
     >
+      {/* Background Lighting Variation for Chapter 03 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,_rgba(255,245,223,0.4),_transparent_65%)] pointer-events-none" />
+
       <div className="relative mx-auto max-w-6xl">
+        {/* Left-Aligned Section Introduction (Rhythm Alignment: Left) */}
+        <div className="relative text-left mb-10 sm:mb-12 max-w-2xl">
+          {/* Unique Section Decoration (Editorial Stamp - Opacity < 15%) */}
+          <EditorialStamp className="w-10 h-10 mb-4" />
 
-        {/* Editorial header */}
-        <div className="mb-10 sm:mb-12 max-w-2xl">
-          {/* Bookmark ornament */}
-          <Bookmark className="w-4 h-7 mb-4 opacity-80" />
-
-          <p className="text-[11px] font-semibold uppercase tracking-[0.44em] text-[#A36A1F] opacity-85 mb-3">
-            FEATURED CREATIONS
+          <p className="text-[10.5px] font-semibold uppercase tracking-[0.44em] text-[#A36A1F] opacity-85 mb-3">
+            CHAPTER 03 • PROJECTS
           </p>
 
           <h2 className="font-serif text-[38px] sm:text-[48px] md:text-[54px] font-bold leading-[1.0] tracking-[-0.02em] text-[#3D2B1A]">
