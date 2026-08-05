@@ -1,13 +1,3 @@
-/**
- * LeetCodeHeatmap/index.jsx
- *
- * "Days I Code" section — the heatmap printed directly onto the page.
- * No card wrapper. No error message. Always renders.
- *
- * Data priority: live API → bundled cache → sample data  (see HeatmapService.js)
- * Username: edit USERNAME in HeatmapService.js or set VITE_LEETCODE_USERNAME
- */
-
 import { useEffect, useRef, useState } from "react";
 import { useLeetCode }   from "./useLeetCode";
 import HeatmapHeader     from "./HeatmapHeader";
@@ -43,9 +33,10 @@ export default function LeetCodeHeatmap() {
       id="leetcode"
       ref={sectionRef}
       className={`
-        w-full max-w-[1180px] mx-auto
-        px-5 sm:px-8
-        py-16 sm:py-20
+        w-full max-w-[1140px] mx-auto
+        px-4 sm:px-8
+        my-8 sm:my-12
+        flex flex-col items-center text-center
         section-hidden
         ${visible ? "section-visible" : ""}
       `}

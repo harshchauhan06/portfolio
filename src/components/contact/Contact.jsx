@@ -1,8 +1,8 @@
 /*
  * Contact.jsx — Editorial closing section. "Find Me."
  *
- * Closing-page feel: generous whitespace, editorial heading hierarchy,
- * sparkle ornament, contact icons that gently fade in on scroll.
+ * Closing-page feel: magazine closing colophon, concise spacing,
+ * sparkle ornament, contact icons close to the heading.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -70,7 +70,7 @@ export default function Contact() {
     {
       key: "github",
       label: "GitHub",
-      ariaLabel: "GitHub",
+      ariaLabel: "GitHub Profile",
       href: SOCIAL_LINKS.github || "",
       isRoute: false,
       target: "_blank",
@@ -84,21 +84,21 @@ export default function Contact() {
     {
       key: "linkedin",
       label: "LinkedIn",
-      ariaLabel: "LinkedIn",
+      ariaLabel: "LinkedIn Profile",
       href: SOCIAL_LINKS.linkedin || "",
       isRoute: false,
       target: "_blank",
       rel: "noopener noreferrer",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 transition-transform duration-250 ease-out group-hover:scale-110">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
         </svg>
       ),
     },
     {
       key: "email",
       label: "Email",
-      ariaLabel: "Email",
+      ariaLabel: "Send Email",
       href: buildMailtoUrl(SOCIAL_LINKS.email),
       isRoute: false,
       target: undefined,
@@ -113,7 +113,7 @@ export default function Contact() {
     {
       key: "resume",
       label: "Résumé",
-      ariaLabel: "Résumé",
+      ariaLabel: "View Resume Page",
       href: SOCIAL_LINKS.resume || "/resume",
       isRoute: true,
       icon: (
@@ -135,57 +135,57 @@ export default function Contact() {
       className={`
         relative flex flex-col items-center text-center
         px-6
-        pt-16 pb-14
+        pt-8 pb-10 sm:pt-10 sm:pb-12
         section-hidden
         ${visible ? "section-visible" : ""}
       `}
     >
       {/* Sparkle ornament */}
-      <Sparkle className="w-10 h-10 mb-6 opacity-70" />
+      <Sparkle className="w-8 h-8 mb-4 opacity-70" />
 
       {/* Editorial label */}
       <p className="
         text-[10.5px] font-semibold uppercase
         tracking-[0.48em]
         text-[#A36A1F] opacity-80
-        mb-4
+        mb-3
       ">
-        Let&rsquo;s Build Something Together
+        LET&rsquo;S BUILD SOMETHING TOGETHER
       </p>
 
       {/* Heading */}
       <h2 className="
         font-serif font-bold
         text-[#3D2B1A]
-        text-[36px] sm:text-[42px]
-        leading-[1.05]
+        text-[36px] sm:text-[44px]
+        leading-[1.0]
         tracking-[-0.02em]
-        mb-5
+        mb-3
       ">
         Find Me
       </h2>
 
       {/* Tagline */}
       <p className="
-        text-[15px] font-normal
+        text-[14.5px] font-normal
         text-[#5A3E20]
-        mb-8
+        mb-6
         tracking-[0.01em]
-        max-w-[420px]
-        leading-[1.75]
+        max-w-[400px]
+        leading-[1.7]
       ">
         Interested in building something together?<br className="hidden sm:block" />
         I&rsquo;d love to hear from you.
       </p>
 
-      {/* Social icon buttons — fade-in staggered */}
-      <div className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap sm:flex-nowrap">
+      {/* Social icon buttons — compact & centered */}
+      <div className="flex items-center justify-center gap-4 sm:gap-5 flex-wrap sm:flex-nowrap">
         {contactButtons.map(({ key, label, ariaLabel, href, isRoute, target, rel, download, icon }, i) => {
           const isValid = Boolean(href && typeof href === "string" && href.trim().length > 0);
 
           const buttonClasses = `
             flex items-center justify-center
-            w-[52px] h-[52px]
+            w-[50px] h-[50px]
             rounded-full
             bg-[#FFF8EC]
             border border-[#A36A1F]/18
@@ -196,7 +196,7 @@ export default function Contact() {
             hover:bg-white
             hover:border-[#A36A1F]/40
             hover:shadow-[0_8px_20px_rgba(61,43,26,.18)]
-            hover:-translate-y-[4px]
+            hover:-translate-y-[3px]
             active:translate-y-0 active:scale-95
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A36A1F] focus-visible:ring-offset-2
             anim-fade-in
@@ -214,7 +214,7 @@ export default function Contact() {
                   rounded shadow-md
                   whitespace-nowrap
                   opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
-                  transition-opacity duration-250 ease-out
+                  transition-opacity duration-200 ease-out
                   pointer-events-none z-20
                 "
                 role="tooltip"
@@ -231,7 +231,7 @@ export default function Contact() {
                   aria-label={`${ariaLabel} (Coming Soon)`}
                   className="
                     flex items-center justify-center
-                    w-[52px] h-[52px]
+                    w-[50px] h-[50px]
                     rounded-full
                     bg-[#FFF8EC]
                     border border-[#A36A1F]/18
@@ -283,7 +283,7 @@ export default function Contact() {
       </div>
 
       {/* Closing thin rule */}
-      <div className="mt-12 w-full max-w-[240px] mx-auto">
+      <div className="mt-8 w-full max-w-[200px] mx-auto">
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-[#A36A1F]/15" />
           <div className="w-1 h-1 rounded-full bg-[#A36A1F]/30" />
