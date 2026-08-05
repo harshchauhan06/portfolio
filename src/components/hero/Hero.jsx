@@ -33,7 +33,6 @@ export default function Hero() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // small delay so CSS paint is done
     const id = requestAnimationFrame(() => {
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
@@ -44,7 +43,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="flex justify-center px-4 sm:px-6 pb-4 mt-[90px] sm:mt-[120px]"
+      className="flex justify-center px-3 sm:px-6 pb-1 mt-[92px] sm:mt-[110px] md:mt-[120px]"
     >
       {/* Fade-up wrapper */}
       <div
@@ -63,42 +62,40 @@ export default function Hero() {
           <div className="flex flex-col items-center text-center w-full">
 
             {/* Editorial sun ornament */}
-            <SunOrnament className="w-9 h-9 mb-4 opacity-80" />
+            <SunOrnament className="w-6 h-6 sm:w-9 sm:h-9 mb-2 sm:mb-4 opacity-80" />
 
-            <p className="text-[10px] font-semibold uppercase tracking-[0.44em] text-[#A36A1F] opacity-80">
-              Full Stack Developer
+            <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.40em] sm:tracking-[0.44em] text-[#A36A1F] opacity-80">
+              FULL STACK DEVELOPER
             </p>
 
             <h1 className="
-              mt-5 font-serif font-bold text-[#3D2B1A]
-              leading-[0.88] tracking-[-0.03em]
-              text-[44px] sm:text-[58px] md:text-[68px]
+              mt-2 sm:mt-5 font-serif font-bold text-[#3D2B1A]
+              leading-[0.92] tracking-[-0.03em]
+              text-[34px] sm:text-[52px] md:text-[68px]
             ">
-              <span className="block">Harsh</span>
-              <span className="block">Chauhan</span>
+              <span className="inline sm:inline md:block">Harsh </span>
+              <span className="inline sm:inline md:block">Chauhan</span>
             </h1>
 
-            <div className="flex items-center gap-3 mt-5">
-              <div className="h-px w-8 sm:w-10 bg-[#A36A1F]/22" />
-              <div className="w-[4px] h-[4px] rounded-full bg-[#A36A1F]/35" />
-              <div className="h-px w-8 sm:w-10 bg-[#A36A1F]/22" />
+            <div className="flex items-center gap-2.5 mt-2.5 sm:mt-5">
+              <div className="h-px w-5 sm:w-10 bg-[#A36A1F]/22" />
+              <div className="w-[3px] h-[3px] sm:w-[4px] sm:h-[4px] rounded-full bg-[#A36A1F]/35" />
+              <div className="h-px w-5 sm:w-10 bg-[#A36A1F]/22" />
             </div>
 
-            <h2 className="mt-4 max-w-[90%] sm:max-w-[480px] text-[15px] sm:text-[17px] leading-[1.5] font-normal text-[#5A4632]">
-              Building AI-powered products with modern web technologies.
+            <h2 className="mt-2.5 sm:mt-4 max-w-[98%] sm:max-w-[500px] text-[13.5px] sm:text-[17px] leading-[1.4] font-normal text-[#5A4632]">
+              I enjoy building web applications that solve real problems.
             </h2>
 
-            <p className="mt-3 max-w-[90%] sm:max-w-[460px] text-[13px] sm:text-[13.5px] leading-[1.85] text-[#7C6448] font-normal">
-              I craft scalable backend systems, modern web applications,
-              and AI-powered experiences — focused on clarity,
-              performance, and lasting craft.
+            <p className="mt-1.5 sm:mt-3 max-w-[98%] sm:max-w-[480px] text-[12px] sm:text-[13.5px] leading-[1.65] sm:leading-[1.85] text-[#7C6448] font-normal">
+              I'm a Computer Science student who enjoys turning ideas into working products. Most of my time goes into building full-stack applications, learning new technologies, and improving as a developer one project at a time.
             </p>
 
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6 w-full sm:w-auto">
               <HeroButtons />
             </div>
 
-            <div className="mt-5">
+            <div className="mt-3 sm:mt-5">
               <ScrollIndicator />
             </div>
 

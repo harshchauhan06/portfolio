@@ -1,11 +1,10 @@
 /**
- * HeatmapGrid.jsx — The contribution grid, printed directly onto the page.
+ * HeatmapGrid.jsx — Contribution grid with enlarged cells.
  *
- * No card wrapper. Cells appear with a staggered reveal animation when
- * the section scrolls into view. Warm yellow palette only — no GitHub blue.
+ * Enlarged cell size for crisp readability and touch interaction.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { getHeatLevel, formatTooltip } from "./utils";
 
 /* ─── Month label row ────────────────────────────────────────────────────── */
@@ -28,11 +27,11 @@ function MonthRow({ columns, monthLabels }) {
           <span
             key={ci}
             style={{
-              fontSize: "10px",
+              fontSize: "9.5px",
               fontWeight: 600,
               textTransform: "uppercase",
-              letterSpacing: "0.24em",
-              color: "rgba(163,106,31,0.72)",
+              letterSpacing: "0.12em",
+              color: "rgba(163,106,31,0.78)",
               lineHeight: 1,
               overflow: "hidden",
               textOverflow: "clip",
@@ -54,7 +53,7 @@ function HeatCell({ day, revealed, delay }) {
 
   if (!day) {
     return (
-      <div style={{ aspectRatio: "1", borderRadius: 4, background: "transparent" }} />
+      <div style={{ aspectRatio: "1", borderRadius: 3, background: "transparent" }} />
     );
   }
 
@@ -67,10 +66,13 @@ function HeatCell({ day, revealed, delay }) {
       style={{
         aspectRatio: "1",
         transitionDelay: `${delay}ms`,
+        zIndex: hovered ? 99 : 1,
         ...(revealed ? { opacity: 1, transform: "translateY(0)" } : {}),
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setTimeout(() => setHovered(false), 1500)}
     >
       {/* Cell */}
       <div
@@ -78,18 +80,18 @@ function HeatCell({ day, revealed, delay }) {
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 4,
+          borderRadius: 3.5,
           backgroundColor: bg,
           border: `1px solid ${border}`,
-          transform: hovered ? "scale(1.3)" : "scale(1)",
+          transform: hovered ? "scale(1.35)" : "scale(1)",
           boxShadow: hovered
-            ? "0 3px 10px rgba(122,66,16,0.28)"
-            : "0 1px 2px rgba(122,66,16,0.07)",
-          filter: hovered ? "brightness(1.1)" : "brightness(1)",
+            ? "0 4px 12px rgba(122,66,16,0.30)"
+            : "0 1px 2px rgba(122,66,16,0.08)",
+          filter: hovered ? "brightness(1.12)" : "brightness(1)",
           transition: "transform 140ms ease, box-shadow 140ms ease, filter 140ms ease",
-          cursor: "default",
+          cursor: "pointer",
           position: "relative",
-          zIndex: hovered ? 10 : 1,
+          zIndex: 1,
         }}
       />
 
@@ -98,7 +100,7 @@ function HeatCell({ day, revealed, delay }) {
         <div
           style={{
             position: "absolute",
-            bottom: "calc(100% + 8px)",
+            bottom: "calc(100% + 7px)",
             left: "50%",
             transform: "translateX(-50%)",
             backgroundColor: "#2C1A0E",
@@ -106,13 +108,13 @@ function HeatCell({ day, revealed, delay }) {
             fontSize: "10.5px",
             fontWeight: 500,
             letterSpacing: "0.01em",
-            lineHeight: 1.45,
-            padding: "5px 9px",
+            lineHeight: 1.4,
+            padding: "5px 10px",
             borderRadius: 6,
             whiteSpace: "nowrap",
             pointerEvents: "none",
-            zIndex: 50,
-            boxShadow: "0 4px 14px rgba(44,26,14,0.28)",
+            zIndex: 100,
+            boxShadow: "0 4px 14px rgba(44,26,14,0.32)",
           }}
         >
           {tooltip}
@@ -144,8 +146,8 @@ export default function HeatmapGrid({ columns, monthLabels, revealed }) {
   const n = columns.length;
 
   return (
-    <div className="w-full overflow-x-auto pb-1">
-      <div style={{ minWidth: `${n * 14}px` }}>
+    <div className="w-full overflow-x-auto pt-4 pb-3 scrollbar-thin">
+      <div style={{ minWidth: `${n * 15}px`, width: "100%" }}>
         {/* Month labels */}
         <MonthRow columns={columns} monthLabels={monthLabels} />
 

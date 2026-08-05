@@ -45,8 +45,8 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 sm:top-6 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8">
-      <div className="relative flex h-14 sm:h-16 w-full max-w-[1100px] items-center justify-between rounded-[18px] sm:rounded-[22px] border border-[#A36A1F]/15 bg-[#FFF8EC] shadow-[0_12px_28px_rgba(61,43,26,.12)] px-4 sm:px-6">
+    <header className="fixed top-3 sm:top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8">
+      <div className="relative flex h-13 sm:h-16 w-full max-w-[1100px] items-center justify-between rounded-[18px] sm:rounded-[22px] border border-[#A36A1F]/15 bg-[#FFF8EC] shadow-[0_12px_28px_rgba(61,43,26,.12)] px-3.5 sm:px-6">
         
         {/* Left: Logo & Brand */}
         <Link
@@ -57,15 +57,15 @@ export default function Navbar() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="flex items-center gap-3 group cursor-pointer"
+          className="flex items-center gap-2.5 group cursor-pointer"
         >
-          <div className="flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center rounded-full border border-[#A36A1F]/20 bg-[#FFF8EC] shadow-sm transition-transform duration-200 group-hover:scale-105">
-            <span className="font-semibold text-[#3D2B1A] text-sm">HC</span>
+          <div className="flex h-9 sm:h-11 w-9 sm:w-11 items-center justify-center rounded-full border border-[#A36A1F]/20 bg-[#FFF8EC] shadow-sm transition-transform duration-200 group-hover:scale-105">
+            <span className="font-semibold text-[#3D2B1A] text-xs sm:text-sm">HC</span>
           </div>
           <span className="hidden sm:inline text-sm font-semibold text-[#5A4732] group-hover:text-[#3D2B1A]">Harsh Chauhan</span>
         </Link>
 
-        {/* Center: Navigation Links */}
+        {/* Center: Desktop Navigation Links */}
         <nav aria-label="Primary navigation" className="hidden sm:flex flex-1 justify-center">
           <div className="flex items-center gap-10">
             {links.map((link) => {
@@ -89,7 +89,7 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Right: Social Quick Links */}
+        {/* Right: Social Quick Links (Desktop) */}
         <div className="hidden sm:flex items-center gap-3.5">
           {SOCIAL_LINKS.github && (
             <a
@@ -113,7 +113,7 @@ export default function Navbar() {
               className="text-[#7C6448] hover:text-[#3D2B1A] transition-colors duration-200 p-1"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.72a1.48 1.48 0 1 0 0 2.96 1.48 1.48 0 0 0 0-2.96z" />
               </svg>
             </a>
           )}
@@ -125,10 +125,10 @@ export default function Navbar() {
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((state) => !state)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#A36A1F]/15 bg-white/90 text-[#5A4732] shadow-sm transition hover:border-[#A36A1F]/25 hover:bg-[#FFFBF1] sm:hidden cursor-pointer"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#A36A1F]/15 bg-white/90 text-[#5A4732] shadow-sm transition hover:border-[#A36A1F]/25 hover:bg-[#FFFBF1] sm:hidden cursor-pointer"
         >
           <span className="sr-only">Menu</span>
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             {menuOpen ? (
               <path d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -141,10 +141,10 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Dropdown Menu with Smooth Animation */}
         {menuOpen && (
-          <div className="absolute inset-x-4 top-full mt-3 rounded-[20px] border border-[#A36A1F]/15 bg-[#FFF8EC] p-4 shadow-[0_18px_48px_rgba(61,43,26,.12)] sm:hidden z-50">
-            <div className="flex flex-col gap-3">
+          <div className="absolute inset-x-2 top-full mt-2 rounded-[20px] border border-[#A36A1F]/20 bg-[#FFF8EC] p-4 shadow-[0_18px_48px_rgba(61,43,26,.16)] sm:hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-col gap-2.5">
               {links.map((link) => {
                 const isResume = link.label === "Resume";
                 return (

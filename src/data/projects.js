@@ -1,32 +1,29 @@
 export const featuredProjects = [
   {
-    id: "expense-tracker",
     title: "Expense Tracker",
     tagline: "React.js • Node.js • Express.js • PostgreSQL • JWT",
     description:
-      "A full-stack expense tracking workspace enabling users to securely manage personal expenses with JWT authentication, RESTful APIs, and interactive analytics charts.",
+      "A personal expense tracker with authentication, analytics, and an intuitive dashboard for managing everyday spending.",
     image: "/projects/expense-tracker.png",
     demoUrl: "https://expense-tracker-pi-bay.vercel.app/dashboard",
     repoUrl: "https://github.com/harshchauhan06/expense-tracker",
   },
   {
-    id: "healix",
-    title: "Healix (Healthcare Support Portal)",
-    tagline: "React.js • Vite • React Router DOM • Vercel",
+    title: "Healthcare Portal",
+    tagline: "React.js • Vite • React Router • Tailwind CSS",
     description:
-      "A responsive healthcare support platform enabling patients to submit support requests, volunteers to register for healthcare initiatives, and automated FAQ assistance.",
+      "A platform that connects patients, volunteers, and healthcare providers through a simple and organized interface.",
     image: "/projects/healix.png",
     demoUrl: "https://healthcare-support-app-five.vercel.app/",
     repoUrl: "https://github.com/harshchauhan06/healthcare-support-app",
   },
   {
-    id: "ai-resume-reviewer",
     title: "AI Resume Reviewer",
-    tagline: "Python • Flask • Groq API • Llama 3.1 • REST API",
+    tagline: "Python • Flask • Groq API • LLM • Tailwind",
     description:
-      "An AI-powered application that analyzes resumes against target job roles and provides intelligent improvement feedback using Groq API (Llama 3.1) and Flask backend.",
+      "Upload a resume and receive AI-powered feedback on formatting, keywords, and overall quality.",
     image: "/projects/ai-resume-reviewer.png",
-    demoUrl: null, // Demo button omitted as requested
+    demoUrl: null, // Omitted as instructed
     repoUrl: "https://github.com/harshchauhan06/Resume_Reviewer_project",
   },
 ];

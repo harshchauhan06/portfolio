@@ -1,6 +1,6 @@
 /**
  * PaperCard — paper SVG as pure decorative background, content in normal flow.
- * No clip-path. No aspect-ratio lock. Paper stretches to fit content height.
+ * Compact mobile padding (px-5 py-5) to shorten height and allow continuous scrolling.
  */
 import { paperEdgePath } from "../../utils/paperEdge";
 
@@ -72,8 +72,8 @@ export default function PaperCard({ children }) {
         style={{ backgroundImage: "repeating-linear-gradient(60deg, transparent, transparent 5px, rgba(120,80,30,0.3) 5px, rgba(120,80,30,0.3) 6px)" }}
         aria-hidden="true" />
 
-      {/* Content — relative, normal flow, no clip, no aspect-ratio */}
-      <div className="relative px-14 pt-10 pb-9 md:px-20 md:pt-12 md:pb-10">
+      {/* Content — compact padding on mobile */}
+      <div className="relative px-5 py-5 sm:px-12 sm:py-9 md:px-20 md:pt-12 md:pb-10">
         {children}
       </div>
 
